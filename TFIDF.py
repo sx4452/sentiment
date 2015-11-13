@@ -1,28 +1,21 @@
 __author__ = 'ben'
 
 import jieba
-import codecs
 import os
 import jieba.analyse
 import math
 import time
-import sys
 
-reload(sys)                                                                          #Set the coding as 'utf-8' or you will get chaos
-sys.setdefaultencoding('gb2312')
-
-def TFIDF(inputFile, stopWordsline, fileCnt):
+def TFIDF(inputFile, fileCnt):
     TF = {}
     tf = {}
     idf = {}
+    inputFile.seek(0)
     inputread = inputFile.read()
     seg_list = jieba.cut(inputread)
     segCnt = 0;
     for seg in seg_list :
-        for j in range(0, len(stopWordsline)):                                                                 #delete stopwords for each line
-            if(tf.has_key(stopWordsline[j][:-2]) == True):
-                del tf[stopWordsline[j][:-2]]
-        if (seg != '' and seg != "\n" and seg != "\n\n") :
+        if (seg != '' and seg != "\n" and seg != "\n\n" and seg != "\t") :
             segCnt += 1
             if seg in tf :
                 tf[seg] += 1
